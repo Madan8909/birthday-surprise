@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Daisy Birthday Surprise 🌼</title>
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial, sans-serif;
+}
+
+body{
+height:100vh;
+overflow:hidden;
+display:flex;
+justify-content:center;
+align-items:center;
+background:linear-gradient(135deg,#fff9c4,#ffe0f0,#e0f7ff);
+position:relative;
+}
+
+/* CARD */
+
+.card{
+text-align:center;
+padding:40px;
+border-radius:20px;
+background:white;
+box-shadow:0 10px 30px rgba(0,0,0,0.2);
+max-width:500px;
+width:90%;
+z-index:2;
+}
+
+h1{
+color:#ff6fa1;
+margin-bottom:15px;
+}
+
+p{
+margin-bottom:20px;
+font-size:18px;
+}
+
+/* BUTTONS */
+
+button{
+padding:12px 25px;
+font-size:18px;
+border:none;
+border-radius:30px;
+cursor:pointer;
+margin:10px;
+}
+
+#forgive{
+background:#ffd84d;
+}
+
+#runaway{
+background:#ff6b6b;
+color:white;
+position:absolute;
+}
+
+/* MESSAGE PAGE */
+
+#birthday{
+display:none;
+text-align:center;
+padding:40px;
+background:white;
+border-radius:20px;
+box-shadow:0 10px 30px rgba(0,0,0,0.2);
+max-width:600px;
+width:90%;
+z-index:2;
+}
+
+#birthday h2{
+color:#ff6fa1;
+margin-bottom:20px;
+}
+
+/* FLOATING DAISIES */
+
+.flower{
+position:absolute;
+animation:float linear infinite;
+}
+
+@keyframes float{
+0%{transform:translateY(100vh)}
+100%{transform:translateY(-10vh)}
+}
+
+/* CONFETTI */
+
+.confetti{
+position:absolute;
+font-size:20px;
+animation:fall 3s linear forwards;
+}
+
+@keyframes fall{
+0%{transform:translateY(-10vh)}
+100%{transform:translateY(110vh)}
+}
+
+/* CLICK FLOWER */
+
+.tapFlower{
+position:absolute;
+font-size:25px;
+pointer-events:none;
+animation:pop 1s forwards;
+}
+
+@keyframes pop{
+0%{transform:scale(0)}
+50%{transform:scale(1.5)}
+100%{transform:scale(0);opacity:0}
+}
+
+/* HEART TRAIL */
+
+.heart{
+position:absolute;
+pointer-events:none;
+animation:floatHeart 1s forwards;
+}
+
+@keyframes floatHeart{
+0%{transform:translateY(0);opacity:1}
+100%{transform:translateY(-40px);opacity:0}
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="card" id="main">
+<h1>Hey Birthday Girl 🌼</h1>
+<p>I might annoy you sometimes… but today you HAVE to forgive me 😌</p>
+
+<button id="forgive">I forgive you idiot ❤️</button>
+<button id="runaway">F*ck off idiot</button>
+</div>
+
+<div id="birthday">
+<h2>Happy Birthday! 🌞</h2>
+<p id="message"></p>
+</div>
+
+<script>
+
+/* FLOATING DAISIES */
+
+for(let i=0;i<80;i++){
+let f=document.createElement("div")
+f.className="flower"
+f.innerHTML="🌼"
+f.style.left=Math.random()*100+"%"
+f.style.fontSize=20+Math.random()*20+"px"
+f.style.animationDuration=5+Math.random()*10+"s"
+document.body.appendChild(f)
+}
+
+/* RUNAWAY BUTTON */
+
+const run=document.getElementById("runaway")
+
+run.addEventListener("mouseover",move)
+run.addEventListener("click",move)
+
+function move(){
+let x=Math.random()*(window.innerWidth-120)
+let y=Math.random()*(window.innerHeight-50)
+run.style.left=x+"px"
+run.style.top=y+"px"
+}
+
+/* MESSAGE */
+
+const text="I’m really grateful to have someone like you in my life. Your presence makes ordinary days brighter and every moment more special. Thank you for all the laughs, the support, and the wonderful memories we share. I hope this year brings you endless happiness, success, and everything your heart wishes for. Enjoy your day to the fullest—you truly deserve it! 🤍🤍🫶"
+
+document.getElementById("forgive").onclick=function(){
+
+document.getElementById("main").style.display="none"
+document.getElementById("birthday").style.display="block"
+
+typeWriter()
+confetti()
+
+}
+
+/* TYPEWRITER */
+
+function typeWriter(){
+let i=0
+function type(){
+if(i<text.length){
+document.getElementById("message").innerHTML+=text.charAt(i)
+i++
+setTimeout(type,30)
+}
+}
+type()
+}
+
+/* CONFETTI */
+
+function confetti(){
+for(let i=0;i<150;i++){
+let c=document.createElement("div")
+c.className="confetti"
+c.innerHTML="🎉"
+c.style.left=Math.random()*100+"%"
+document.body.appendChild(c)
+}
+}
+
+/* CLICK DAISY */
+
+document.addEventListener("click",function(e){
+
+let d=document.createElement("div")
+d.className="tapFlower"
+d.innerHTML="🌼"
+d.style.left=e.pageX+"px"
+d.style.top=e.pageY+"px"
+document.body.appendChild(d)
+
+setTimeout(()=>d.remove(),1000)
+
+})
+
+/* HEART TRAIL */
+
+document.addEventListener("mousemove",function(e){
+
+let h=document.createElement("div")
+h.className="heart"
+h.innerHTML="💖"
+h.style.left=e.pageX+"px"
+h.style.top=e.pageY+"px"
+document.body.appendChild(h)
+
+setTimeout(()=>h.remove(),1000)
+
+})
+
+</script>
+
+</body>
+</html>
